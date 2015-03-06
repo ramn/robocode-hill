@@ -1,0 +1,9 @@
+@main("Upload your bot") {
+  @helper.form(action = routes.Bots.create, 'enctype -> "multipart/form-data") {
+    <p>Upload bot (jar)</p>
+    <input type="file" name="bot">
+    <p>
+      <input type="submit">
+    </p>
+  }
+}

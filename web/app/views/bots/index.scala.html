@@ -1,0 +1,15 @@
+@(bots: Seq[Bot])
+
+@main("Bots") {
+  <p>
+    <a href="/bots/add">Upload new bot</a>
+  </p>
+
+  <h2>All bots</h2>
+  @for(bot <- bots) {
+    <dl>
+      <dt>@bot.name</dt>
+      <dd>@bot.jar.length</dt>
+    </dl>
+  }
+}
