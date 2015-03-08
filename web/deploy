@@ -7,12 +7,12 @@ function build() {
 }
 
 function upload() {
-rsync -riP --exclude RUNNING_PID --exclude logs/ \
-  target/universal/stage/ "$HOST":robocode-hill/
+  rsync -riP --exclude RUNNING_PID --exclude logs/ \
+    target/universal/stage/ "$HOST":robocode-hill/
 }
 
 function restart() {
-ssh "$HOST" "bash" <<-"EOF"
+ssh "$HOST" bash <<-"EOF"
   PIDF=./robocode-hill/RUNNING_PID
   test -f "$PIDF" && kill $(cat "$PIDF")
   nohup ./robocode-hill/bin/robocode-hill &
