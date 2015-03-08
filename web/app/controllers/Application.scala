@@ -15,7 +15,6 @@ object Application extends Controller {
     val workingDir = Paths.get(sys.env("PWD"), "..", "sandbox")
     val battleRunner = new BattleRunner(workingDir)
     battleRunner.run()
-
     Ok("Battle done")
   }
 }
