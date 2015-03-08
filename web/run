@@ -1,5 +1,5 @@
 #!/bin/bash
 
 # Configured in conf/jvmopts
-cmd="target/universal/stage/bin/robocode-hill-web"
+cmd="target/universal/stage/bin/robocode-hill"
 exec $cmd -Dhttp.port=9000

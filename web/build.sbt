@@ -1,6 +1,6 @@
 import NativePackagerKeys._
 
-name := """robocode-hill-web"""
+name := """robocode-hill"""
 
 version := "1.0-SNAPSHOT"
 

@@ -1,4 +1,23 @@
 #!/bin/bash
 
-sbt stage && \
-  rsync -riP target/universal/stage/ root@robocode.ramn.se:robocode-hill/
+HOST=root@robocode.ramn.se
+
+function build() {
+  sbt stage
+}
+
+function upload() {
+rsync -riP --exclude RUNNING_PID --exclude logs/ \
+  target/universal/stage/ "$HOST":robocode-hill/
+}
+
+function restart() {
+ssh "$HOST" "bash" <<-"EOF"
+  PIDF=./robocode-hill/RUNNING_PID
+  test -f "$PIDF" && kill $(cat "$PIDF")
+  nohup ./robocode-hill/bin/robocode-hill &
+EOF
+}
+
+
+build && upload && restart
