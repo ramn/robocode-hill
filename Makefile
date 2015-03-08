@@ -1,7 +1,6 @@
-.PHONY: run
+.PHONY: run-robocode
 
 robocode_url := "http://garr.dl.sourceforge.net/project/robocode/naval-robocode/0.9.1/naval-robocode-0.9.1-setup.jar"
-
 robocode_repo := "git@github.com:robo-code/robocode.git"
 
 target:
@@ -13,7 +12,7 @@ target/robocode: target/robocode.jar
 target/robocode.jar: target
 	curl -JLo target/robocode.jar $(robocode_url)
 
-run: target/robocode
+run-robocode: target/robocode
 	bash target/robocode/robocode.sh $(ARGS)
 
 #target/robocode: target
