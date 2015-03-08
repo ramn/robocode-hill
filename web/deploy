@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOST=root@robocode.ramn.se
+HOST=robocode@robocode.ramn.se
 
 function build() {
   sbt stage
