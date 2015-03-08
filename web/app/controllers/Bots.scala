@@ -2,11 +2,13 @@ package controllers
 
 import java.io.File
 import java.io.FileFilter
-import scala.collection.JavaConversions._
+//import scala.collection.JavaConversions._
 import collection.immutable.Seq
 
-import play.api._
+//import play.api._
 import play.api.mvc._
+import play.api.mvc.MultipartFormData
+import play.api.libs.Files.TemporaryFile
 
 import models.Bot
 
@@ -18,20 +20,35 @@ object Bots extends Controller {
     Ok(views.html.bots.index(listBots))
   }
 
-  def add = Action {
-    Ok(views.html.bots.add())
+  def add = Action { request =>
+    Ok(views.html.bots.add(request.flash.get("error")))
   }
 
   def create = Action(parse.multipartFormData) { request =>
+    handleBotUpload(request) match {
+      case Left(error) =>
+        Redirect(routes.Bots.add).flashing("error" -> error)
+      case Right(()) =>
+        Ok("Bot uploaded")
+    }
+  }
+
+  private def handleBotUpload(request: Request[MultipartFormData[TemporaryFile]]) = {
+    val acceptableMime = "application/java-archive"
+
     request.body.file("bot").map { bot =>
       val filename = bot.filename
       val contentType = bot.contentType
-      bot.ref.moveTo(new File(s"$botDir/$filename"))
-      Ok("Bot uploaded")
-      }.getOrElse {
-        Redirect(routes.Bots.index).flashing(
-          "error" -> "Missing file")
+      if (!contentType.map(_ == acceptableMime).getOrElse(false)) {
+        Left("Must be a .jar file")
+      } else {
+        // TODO: handle uploaded file
+        //bot.ref.moveTo(new File(s"$botDir/$filename"))
+        Right(())
       }
+    } getOrElse {
+      Left("Must supply a bot file")
+    }
   }
 
   private def listBots: Seq[Bot] = {

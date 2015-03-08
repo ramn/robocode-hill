@@ -1,4 +1,11 @@
+@(flashMsg: Option[String])
 @main("Upload your bot") {
+  @for(msg <- flashMsg) {
+    <p>
+      @msg
+    </p>
+  }
+
   @helper.form(action = routes.Bots.create, 'enctype -> "multipart/form-data") {
     <p>Upload bot (jar)</p>
     <input type="file" name="bot">
