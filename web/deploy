@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sbt stage && \
+  rsync -riP target/universal/stage/ root@robocode.ramn.se:robocode-hill/
