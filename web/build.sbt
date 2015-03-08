@@ -4,17 +4,17 @@ name := """robocode-hill"""
 
 version := "1.0-SNAPSHOT"
 
+scalaVersion := "2.11.5"
+
 maintainer in Docker := "ramn"
 
 bashScriptConfigLocation := Some("${app_home}/../conf/jvmopts")
 
-sources in (Compile,doc) := Seq.empty
+sources in (Compile, doc) := Seq.empty
 
 publishArtifact in (Compile, packageDoc) := false
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
-
-scalaVersion := "2.11.5"
 
 libraryDependencies ++= Seq(
   //jdbc,
