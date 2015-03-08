@@ -4,6 +4,7 @@
 
 # Home page
 GET    /                            controllers.Application.index
+GET    /battle                      controllers.Application.battle
 GET    /bots                        controllers.Bots.index
 GET    /bots/add                    controllers.Bots.add
 POST   /bots                        controllers.Bots.create

@@ -12,7 +12,7 @@ import models.Bot
 
 
 object Bots extends Controller {
-  final val BotDir = "/data/bots"
+  val botDir = sys.env.get("ROBOT_DIR").getOrElse("/data/bots")
 
   def index = Action {
     Ok(views.html.bots.index(listBots))
@@ -26,7 +26,7 @@ object Bots extends Controller {
     request.body.file("bot").map { bot =>
       val filename = bot.filename
       val contentType = bot.contentType
-      bot.ref.moveTo(new File(s"$BotDir/$filename"))
+      bot.ref.moveTo(new File(s"$botDir/$filename"))
       Ok("Bot uploaded")
       }.getOrElse {
         Redirect(routes.Bots.index).flashing(
@@ -40,10 +40,14 @@ object Bots extends Controller {
         file.getName.endsWith(".jar")
       }
     }
-    val botDir = new File(BotDir)
-    val jars = botDir.listFiles(new JarsFilter)
-    jars.to[Seq] map { botFile =>
-      Bot(botFile)
+    val myBotDir = new File(botDir)
+    if (!myBotDir.exists) {
+      Seq.empty
+    } else {
+      val jars = myBotDir.listFiles(new JarsFilter)
+      jars.to[Seq] map { botFile =>
+        Bot(botFile)
+      }
     }
   }
 }
