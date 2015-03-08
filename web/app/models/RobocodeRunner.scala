@@ -13,17 +13,6 @@ import robocode.control.events.BattleCompletedEvent
 import robocode.control.events.BattleAdaptor
 
 
-object BattleRunner {
-  def main(args: Array[String]) = {
-    val workingDir = if (args.length > 0) args(0) else "./sandbox"
-    System.setProperty("NOSECURITY", "true")
-    System.setProperty("debug", "true")
-    val battleRunner = new BattleRunner(new File(workingDir))
-    battleRunner.run()
-    System.exit(0)
-  }
-}
-
 class BattleRunner(workingDir: File) {
   def this(workingDir: String) = this(new File(workingDir))
   def this(workingDir: Path) = this(workingDir.toAbsolutePath.normalize.toFile)
