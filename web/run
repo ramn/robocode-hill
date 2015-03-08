@@ -1,6 +1,5 @@
 #!/bin/bash
 
+# Configured in conf/jvmopts
 cmd="target/universal/stage/bin/robocode-hill-web"
-
-#exec "$cmd" -DNOSECURITY=true -J-Xms24m -J-Xmx50m
-exec "$cmd" -DNOSECURITY=true -mem 100 -J-server
+exec $cmd -Dhttp.port=9000

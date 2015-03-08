@@ -1,0 +1,4 @@
+#-J-Xms24m -J-Xmx50m
+-mem 90
+-J-server
+-Dhttp.port=80
