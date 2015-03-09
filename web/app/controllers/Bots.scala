@@ -33,7 +33,9 @@ object Bots extends Controller {
     }
   }
 
-  private def handleBotUpload(request: Request[MultipartFormData[TemporaryFile]]) = {
+  private def handleBotUpload(
+    request: Request[MultipartFormData[TemporaryFile]]
+  ) = {
     val acceptableMime = "application/java-archive"
 
     request.body.file("bot").map { bot =>
