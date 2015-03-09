@@ -44,6 +44,7 @@ object Bots extends Controller {
       if (!contentType.map(_ == acceptableMime).getOrElse(false)) {
         Left("Must be a .jar file")
       } else {
+        val TemporaryFile(botfile: File) = bot.ref
         // TODO: handle uploaded file
         //bot.ref.moveTo(new File(s"$botDir/$filename"))
         Right(())
