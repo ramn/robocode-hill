@@ -35,13 +35,18 @@ scalacOptions ++= Seq(
 
 testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oD")
 
+resolvers +=
+    "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+
 libraryDependencies ++= Seq(
   //jdbc,
   //anorm,
   cache,
   ws,
-  "org.mapdb" % "mapdb" % "1.0.7",
-  "org.scalatest" %% "scalatest" % "2.2.2" % "test",
+  //"org.mapdb" % "mapdb" % "1.0.7",
+  //"org.mapdb" % "mapdb" % "2.0-alpha1",
+  "org.mapdb" % "mapdb" % "2.0.0-SNAPSHOT",
+  "org.scalatest" %% "scalatest" % "2.2.4" % "test",
   "org.scalamock" %% "scalamock-scalatest-support" % "3.1.2" % "test"
   //"net.sf.robocode" % "robocode.api" % "1.9.2.1",
 )
