@@ -1,15 +1,21 @@
-This is your new Play application
-=================================
+Running
+=======
+Environment variable `DB_DIR` must be set, this is where database files will be
+persisted.
 
-This file will be packaged with your application, when using `activator dist`.
-
-
-Setting heap memory size:
-
-    /path/to/bin/<project-name> -mem 512 -J-server
+    DB_DIR=../data target/universal/stage/bin/robocode-hill -Dhttp.port=9000 -mem 128
 
 
-## Nginx config
+Deploy
+=======
+As simple as running the deploy script:
+
+    ./deploy
+
+The host needs to have nginx running, with the configuration below.
+
+Nginx config
+------------
 
     server {
       listen 80;
