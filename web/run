@@ -1,5 +1,8 @@
 #!/bin/bash
+# Configuration in conf/jvmopts
 
-# Configured in conf/jvmopts
+export DATA_DIR=tmp/data
+
+mkdir -p "$DATA_DIR"
 cmd="target/universal/stage/bin/robocode-hill"
-exec $cmd -Dhttp.port=9000
+exec  $cmd -Dhttp.port=9000 -mem 20
