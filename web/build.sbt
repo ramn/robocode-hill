@@ -29,8 +29,8 @@ scalacOptions ++= Seq(
   "-Ywarn-dead-code",        // N.B. doesn't work well with the ??? hole
   "-Ywarn-numeric-widen",
   "-Ywarn-value-discard",
-  "-Xfuture",
-  "-Ywarn-unused-import"
+  "-Xfuture"
+  //,"-Ywarn-unused-import"
 )
 
 testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oD")
