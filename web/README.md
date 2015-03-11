@@ -1,9 +1,9 @@
 Running
 =======
-Environment variable `DB_DIR` must be set, this is where database files will be
+Environment variable `DATA_DIR` must be set, this is where database files will be
 persisted.
 
-    DB_DIR=../data target/universal/stage/bin/robocode-hill -Dhttp.port=9000 -mem 128
+    DATA_DIR=../data target/universal/stage/bin/robocode-hill -Dhttp.port=9000 -mem 128
 
 
 Deploy
