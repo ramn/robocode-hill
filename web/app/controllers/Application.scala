@@ -12,6 +12,7 @@ object Application extends Controller {
   }
 
   def battle = Action {
+    // TODO: run Battle in temp dir
     val workingDir = Paths.get(sys.env("PWD"), "..", "sandbox")
     val battleRunner = new BattleRunner(workingDir)
     battleRunner.run()

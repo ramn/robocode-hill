@@ -1,24 +1,23 @@
-package unit
+package se.ramn.unit
 
 import java.io.File
 import java.util.UUID
 import collection.concurrent
-//import collection.mutable
-//import collection.JavaConversions._
 import collection.JavaConverters._
 
 import org.scalatest.FunSuite
 import org.scalatest.FunSpec
 
-import models.Bot
-import models.DbUtil
+import se.ramn.models.DbAccessor
 
+
+case class Bot(jar: File)
 
 class DbTest extends FunSpec {
   describe("an in memory db") {
     describe("when using transactions") {
       it("should conform to ACID") {
-        val dbUtil = DbUtil.newMemoryDB
+        val dbUtil = DbAccessor.newMemoryDB
 
         val botId = UUID.fromString("64f264c8-170d-4c44-b742-9f6b4d8b8726")
 
@@ -54,5 +53,30 @@ class DbTest extends FunSpec {
         }
       }
     }
+
+    //describe("when reusing table from outside tx") {
+    //  it("the tx operation should be isolated") {
+
+    //    val dbUtil = DbAccessor.newMemoryDB
+
+    //    val botId = UUID.fromString("64f264c8-170d-4c44-b742-9f6b4d8b8726")
+
+    //    val expectedBot = Bot(jar=new File("activator"))
+
+    //    val botsTable = dbUtil.db.getTreeMap[UUID, Bot]("bots").asScala
+
+    //    val tx1 = dbUtil.makeTx
+
+    //    assert(botsTable.get(botId) === None)
+
+    //    dbUtil inTx { db =>
+    //      //val botsTable: concurrent.Map[UUID, Bot] = db.getTreeMap[UUID, Bot]("bots").asScala
+    //      botsTable.put(botId, Bot(jar=new File("activator")))
+    //    }
+
+    //    assert(tx1.getTreeMap[UUID, Bot]("bots").asScala.get(botId) === None)
+    //    assert(botsTable.get(botId) === Some(expectedBot))
+    //  }
+    //}
   }
 }

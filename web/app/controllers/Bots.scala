@@ -10,7 +10,7 @@ import play.api.mvc._
 import play.api.mvc.MultipartFormData
 import play.api.libs.Files.TemporaryFile
 
-import models.Bot
+import se.ramn.models.Bot
 
 
 object Bots extends Controller {
@@ -66,7 +66,7 @@ object Bots extends Controller {
     } else {
       val jars = myBotDir.listFiles(new JarsFilter)
       jars.to[Seq] map { botFile =>
-        Bot(botFile)
+        Bot(originalFile=botFile)
       }
     }
   }

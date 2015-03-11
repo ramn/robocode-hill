@@ -1,8 +1,12 @@
-package models
+package se.ramn.models
 
 import java.io.File
+import java.util.UUID
 
 
-case class Bot(jar: File) {
-  def name = jar.getName
+case class Bot(
+  id: UUID = UUID.randomUUID,
+  originalFile: File
+  ) {
+  def persistedFilename: String = id.toString + ".jar"
 }

@@ -1,3 +1,5 @@
+@import se.ramn.models.Bot
+
 @(bots: Seq[Bot])
 
 @main("Bots") {
@@ -8,8 +10,8 @@
   <h2>All bots</h2>
   @for(bot <- bots) {
     <dl>
-      <dt>@bot.name</dt>
-      <dd>@bot.jar.length</dt>
+      <dt>@bot.originalFile.getName</dt>
+      <dd>@bot.originalFile.length</dt>
     </dl>
   }
 }
