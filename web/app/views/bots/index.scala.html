@@ -1,17 +1,26 @@
 @import se.ramn.models.Bot
-
-@(bots: Seq[Bot])
-
+@(bots: Iterable[Bot])
 @main("Bots") {
-  <p>
-    <a href="/bots/add">Upload new bot</a>
-  </p>
+  <h1>All bots</h1>
+  <p><a href="/bots/add">Upload new bot</a></p>
 
-  <h2>All bots</h2>
   @for(bot <- bots) {
-    <dl>
-      <dt>@bot.originalFile.getName</dt>
-      <dd>@bot.originalFile.length</dt>
-    </dl>
+    <p>
+      <dl>
+        <dt>Id</dt>
+        <dd>
+          <a href="@routes.Bots.show(bot.id.toString)">@bot.id</a>
+        </dd>
+
+        <dt>Filename</dt>
+        <dd>@bot.originalFilename</dt>
+
+        <dt>Size bytes</dt>
+        <dd>@bot.sizeBytes</dd>
+
+        <dt>Uploaded at</dt>
+        <dd>@bot.createdAt</dd>
+      </dl>
+    </p>
   }
 }

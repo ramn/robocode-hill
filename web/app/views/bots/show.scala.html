@@ -1,0 +1,23 @@
+@import se.ramn.models.Bot
+@(bot: Bot)
+@main("Show bot") {
+  <h1>Show bot</h1>
+  <p><a href="/bots">Show all bots</a></p>
+  <p><a href="/bots/add">Upload new bot</a></p>
+
+  <p>
+    <dl>
+      <dt>Id</dt>
+      <dd>@bot.id</dd>
+
+      <dt>Filename</dt>
+      <dd>@bot.originalFilename</dt>
+
+      <dt>Size bytes</dt>
+      <dd>@bot.sizeBytes</dd>
+
+      <dt>Uploaded at</dt>
+      <dd>@bot.createdAt</dd>
+    </dl>
+  </p>
+}

@@ -2,6 +2,8 @@ package se.ramn.models
 
 import java.util.UUID
 import collection.JavaConverters._
+import collection.immutable.Set
+
 import org.mapdb.DB
 
 
@@ -12,9 +14,13 @@ object BotRepository {
     }
   }
 
+  def all: Set[Bot] = Db.inTx { db =>
+    table(db).values.toSet
+  }
+
   def put(bot: Bot) = {
     Db.inTx { db =>
-      //table(db).put(bot.id, bot)
+      table(db).put(bot.id, bot)
     }
   }
 

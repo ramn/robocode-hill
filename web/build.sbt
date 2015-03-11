@@ -4,7 +4,7 @@ name := """robocode-hill"""
 
 version := "1.0-SNAPSHOT"
 
-scalaVersion := "2.11.5"
+scalaVersion := "2.11.6"
 
 maintainer in Docker := "ramn"
 
@@ -43,6 +43,7 @@ libraryDependencies ++= Seq(
   //anorm,
   cache,
   ws,
+  "joda-time" % "joda-time" % "2.7",
   //"org.mapdb" % "mapdb" % "1.0.7",
   //"org.mapdb" % "mapdb" % "2.0-alpha1",
   "org.mapdb" % "mapdb" % "2.0.0-SNAPSHOT",
