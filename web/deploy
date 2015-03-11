@@ -17,6 +17,7 @@ function restart() {
 ssh "$HOST" bash <<-"EOF"
   PIDF=./robocode-hill/RUNNING_PID
   test -f "$PIDF" && kill $(cat "$PIDF")
+  export DATA_DIR="$HOME/robocode-hill-data"
   nohup ./robocode-hill/bin/robocode-hill &
 EOF
 }
