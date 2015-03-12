@@ -86,24 +86,3 @@ object JarExtractorTest extends App {
     Thread.sleep(5000)
   }
 }
-
-//object Unzipper {
-//  def unzip(file: File, outputDir: File) = {
-//    val zipFile = new ZipFile(file)
-//    val entries = zipFile.entries
-//    while (entries.hasMoreElements) {
-//      val entry: ZipEntry = entries.nextElement
-//      val entryDestination = new File(outputDir,  entry.getName)
-//      entryDestination.getParentFile.mkdirs()
-//      if (entry.isDirectory) {
-//        entryDestination.mkdirs()
-//      } else {
-//        val in = zipFile.getInputStream(entry)
-//        val out = new FileOutputStream(entryDestination)
-//        IOUtils.copy(in, out)
-//        IOUtils.closeQuietly(in)
-//        IOUtils.closeQuietly(out)
-//      }
-//    }
-//  }
-//}
