@@ -1,9 +1,8 @@
 package controllers
 
-import java.nio.file.Paths
 import play.api._
 import play.api.mvc._
-import se.ramn.BattleRunner
+import se.ramn.robocode.RandomBattleground
 
 
 object Application extends Controller {
@@ -12,10 +11,7 @@ object Application extends Controller {
   }
 
   def battle = Action {
-    // TODO: run Battle in temp dir
-    val workingDir = Paths.get(sys.env("PWD"), "..", "sandbox")
-    val battleRunner = new BattleRunner(workingDir)
-    battleRunner.run()
+    RandomBattleground.run
     Ok("Battle done")
   }
 }

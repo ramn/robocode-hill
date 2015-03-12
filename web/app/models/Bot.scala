@@ -8,6 +8,7 @@ import scala.util.control.NonFatal
 import java.io.File
 import java.util.UUID
 import java.nio.file.Paths
+import java.nio.file.Path
 import java.nio.file.Files
 
 import org.joda.time.DateTime
@@ -22,6 +23,7 @@ case class Bot(
   createdAt: DateTime = DateTime.now(DateTimeZone.UTC)
   ) {
   def persistedFilename: String = id.toString + ".jar"
+  def persistedPath: Path = Config.BotDir.toPath.resolve(persistedFilename)
 }
 
 

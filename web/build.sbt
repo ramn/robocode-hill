@@ -44,6 +44,7 @@ libraryDependencies ++= Seq(
   cache,
   ws,
   "joda-time" % "joda-time" % "2.7",
+  "commons-io" % "commons-io" % "2.4",
   //"org.mapdb" % "mapdb" % "1.0.7",
   //"org.mapdb" % "mapdb" % "2.0-alpha1",
   "org.mapdb" % "mapdb" % "2.0.0-SNAPSHOT",

@@ -1,4 +1,4 @@
-package se.ramn
+package se.ramn.robocode
 
 import java.io.File
 import java.nio.file.Path
@@ -13,7 +13,10 @@ import robocode.control.events.BattleCompletedEvent
 import robocode.control.events.BattleAdaptor
 
 
-class BattleRunner(workingDir: File) {
+class BattleRunner(
+  workingDir: File,
+  botClassnames: Set[String] = Set("sample.RamFire", "sample.Corners")
+) {
   def this(workingDir: String) = this(new File(workingDir))
   def this(workingDir: Path) = this(workingDir.toAbsolutePath.normalize.toFile)
 
@@ -29,7 +32,7 @@ class BattleRunner(workingDir: File) {
     // Setup the battle specification
     val numberOfRounds = 5
     val battlefield = new BattlefieldSpecification(800, 600)
-    val selectedRobots = engine.getLocalRepository("sample.RamFire,sample.Corners")
+    val selectedRobots = engine.getLocalRepository(botClassnames.mkString(","))
     val battleSpec = new BattleSpecification(
       numberOfRounds,
       battlefield,
