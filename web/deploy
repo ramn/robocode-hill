@@ -8,6 +8,7 @@ function build() {
 
 function upload() {
   rsync -riP \
+    --delete \
     --exclude RUNNING_PID \
     --exclude logs/ \
     target/universal/stage/ "$HOST":robocode-hill/
