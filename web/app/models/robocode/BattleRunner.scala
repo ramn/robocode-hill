@@ -32,7 +32,7 @@ class BattleRunner(
     // Setup the battle specification
     val numberOfRounds = 5
     val battlefield = new BattlefieldSpecification(800, 600)
-    val selectedRobots = engine.getLocalRepository(botClassnames.mkString(","))
+    val selectedRobots = engine.getLocalRepository(botSelectionSpecification(botClassnames))
     val battleSpec = new BattleSpecification(
       numberOfRounds,
       battlefield,
@@ -41,6 +41,18 @@ class BattleRunner(
 
     engine.runBattle(battleSpec, true) // waits till the battle finishes
     engine.close() // Cleanup our RobocodeEngine
+  }
+
+  private def botSelectionSpecification(botClassnames: Set[String]): String = {
+    def needsWildcardVersion(botClass: String) =
+      !(botClass.startsWith("sample") || botClass.startsWith("tested."))
+    def amendClassName(botClass: String) = {
+      if (needsWildcardVersion(botClass))
+        botClass + "*"
+      else
+        botClass
+    }
+    botClassnames.map(amendClassName).mkString(",")
   }
 }
 
