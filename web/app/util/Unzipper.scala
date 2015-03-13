@@ -70,7 +70,9 @@ class BotExtractorDelegate extends JarExtractorDelegate {
         case e: Exception => e.printStackTrace
       }
     }
-    val doExtract = !entryname.startsWith("META-INF")
+    val doExtract =
+      !entryname.startsWith("META-INF")
+      //&& !entryname.endsWith(".properties")
     doExtract
   }
 }
