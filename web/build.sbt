@@ -33,6 +33,8 @@ scalacOptions ++= Seq(
   //,"-Ywarn-unused-import"
 )
 
+javacOptions ++= Seq("-target", "1.8", "-Xlint")
+
 testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oD")
 
 resolvers +=
