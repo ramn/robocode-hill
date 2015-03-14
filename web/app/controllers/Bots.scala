@@ -47,10 +47,10 @@ object Bots extends Controller {
     botOpt match {
       case Some(bot) =>
         val oneYearInSecs = 31536000
-        Ok.sendFile(bot.persistedPath.toFile, inline=true)
+        Ok.sendFile(bot.persistedPath.toFile)
           .withHeaders(
             CACHE_CONTROL -> s"max-age=$oneYearInSecs",
-            CONTENT_DISPOSITION -> s"attachment; filename=${bot.originalFilename}",
+            CONTENT_DISPOSITION -> s""""attachment; filename="${bot.originalFilename}"""",
             CONTENT_TYPE -> "application/java-archive")
       case None => NotFound
     }
