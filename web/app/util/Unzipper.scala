@@ -76,15 +76,3 @@ class BotExtractorDelegate extends JarExtractorDelegate {
     doExtract
   }
 }
-
-
-// TODO: remove me, just for testing
-object JarExtractorTest extends App {
-  InTempDir { tempdir =>
-    println(s"tempdir: $tempdir")
-    val delegate = new BotExtractorDelegate
-    JarExtractor.deflate(new File(args(0)), tempdir, delegate)
-
-    Thread.sleep(5000)
-  }
-}
