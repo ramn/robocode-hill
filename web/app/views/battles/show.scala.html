@@ -47,31 +47,31 @@
     <table cellpadding="1" cellspacing="1" border="1">
       <tr>
         <th>TeamLeaderName</th>
+        <th>Rank</th>
+        <th>Score</th>
         <th>BulletDamage</th>
         <th>BulletDamageBonus</th>
-        <th>Firsts</th>
         <th>LastSurvivorBonus</th>
         <th>RamDamage</th>
         <th>RamDamageBonus</th>
-        <th>Rank</th>
-        <th>Score</th>
-        <th>Seconds</th>
         <th>Survival</th>
+        <th>Firsts</th>
+        <th>Seconds</th>
         <th>Thirds</th>
       </tr>
       @for(result <- report.completedEvent.getSortedResults) {
         <tr>
           <td>@result.getTeamLeaderName</td>
+          <td>@result.getRank</td>
+          <td>@result.getScore</td>
           <td>@result.getBulletDamage</td>
           <td>@result.getBulletDamageBonus</td>
-          <td>@result.getFirsts</td>
           <td>@result.getLastSurvivorBonus</td>
           <td>@result.getRamDamage</td>
           <td>@result.getRamDamageBonus</td>
-          <td>@result.getRank</td>
-          <td>@result.getScore</td>
-          <td>@result.getSeconds</td>
           <td>@result.getSurvival</td>
+          <td>@result.getFirsts</td>
+          <td>@result.getSeconds</td>
           <td>@result.getThirds</td>
         </tr>
       }
