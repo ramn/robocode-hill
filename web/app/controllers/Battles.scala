@@ -7,6 +7,10 @@ import se.ramn.roborunner.RandomBattleground
 
 object Battles extends Controller {
   def index = Action {
+    Ok(views.html.battles.index())
+  }
+
+  def create = Action { request =>
     val battleReportOpt = RandomBattleground.run
     battleReportOpt match {
       case Some(battleReport) =>
