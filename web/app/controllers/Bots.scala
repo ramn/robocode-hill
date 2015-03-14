@@ -16,7 +16,6 @@ import se.ramn.models.UploadBotRequest
 
 
 object Bots extends Controller {
-  val botDir = sys.env.get("ROBOT_DIR").getOrElse("/data/bots")
 
   def index = Action {
     Ok(views.html.bots.index(listBots))
