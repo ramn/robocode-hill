@@ -2,6 +2,7 @@ package se.ramn.roborunner
 
 import java.io.File
 import java.nio.file.Path
+import collection.immutable.Seq
 
 import robocode.control.RobocodeEngine
 import robocode.control.BattlefieldSpecification
@@ -17,7 +18,7 @@ import se.ramn.models.RobocodeBattleReport
 
 class BattleRunner(
   workingDir: File,
-  botClassnames: Set[String] = Set("sample.RamFire", "sample.Corners")
+  botClassnames: Seq[String] = Seq("sample.RamFire", "sample.Corners")
 ) {
   def this(workingDir: String) = this(new File(workingDir))
   def this(workingDir: Path) = this(workingDir.toAbsolutePath.normalize.toFile)
@@ -50,7 +51,7 @@ class BattleRunner(
     }
   }
 
-  private def botSelectionSpecification(botClassnames: Set[String]): String = {
+  private def botSelectionSpecification(botClassnames: Seq[String]): String = {
     def needsWildcardVersion(botClass: String) =
       !(botClass.startsWith("sample") || botClass.startsWith("tested."))
     def amendClassName(botClass: String) = {

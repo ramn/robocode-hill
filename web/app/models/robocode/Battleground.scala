@@ -41,7 +41,7 @@ class Battleground {
       val mainClasses = battleRequest.bots map { bot =>
         unpackBotInSandbox(bot, robotdir)
       }
-      val battleRunner = new BattleRunner(tempdir, mainClasses.toSet)
+      val battleRunner = new BattleRunner(tempdir, mainClasses)
       val robocodeBattleReportOpt = battleRunner.run()
       robocodeBattleReportOpt match {
         case Some(report) =>
