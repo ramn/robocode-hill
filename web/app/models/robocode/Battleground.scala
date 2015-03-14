@@ -1,5 +1,5 @@
 package se.ramn
-package robocode
+package roborunner
 
 import scala.util.Random
 import scala.collection.immutable.Seq
@@ -11,10 +11,11 @@ import java.util.Properties
 
 import se.ramn.models.Bot
 import se.ramn.models.BotRepository
+import se.ramn.models.BattleReport
 
 
 object RandomBattleground {
-  def run() = {
+  def run(): Option[BattleReport] = {
     InTempDir { tempdir =>
       val botSelection = generateBotSelection
       val robotdir = new File(tempdir, "robots")
@@ -22,7 +23,8 @@ object RandomBattleground {
         unpackBotInSandbox(bot, robotdir)
       }
       val battleRunner = new BattleRunner(tempdir, mainClasses.toSet)
-      battleRunner.run()
+      val battleReportOpt = battleRunner.run()
+      battleReportOpt
     }
   }
 

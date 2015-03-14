@@ -1,4 +1,4 @@
-package se.ramn.robocode
+package se.ramn.roborunner
 
 import java.io.File
 import java.nio.file.Path
@@ -12,6 +12,8 @@ import robocode.control.events.BattleMessageEvent
 import robocode.control.events.BattleCompletedEvent
 import robocode.control.events.BattleAdaptor
 
+import se.ramn.models.BattleReport
+
 
 class BattleRunner(
   workingDir: File,
@@ -20,12 +22,13 @@ class BattleRunner(
   def this(workingDir: String) = this(new File(workingDir))
   def this(workingDir: Path) = this(workingDir.toAbsolutePath.normalize.toFile)
 
-  def run() = {
+  def run(): Option[BattleReport] = {
     RobocodeEngine.setLogMessagesEnabled(false) // Disables Robocode logging
     val engine = new RobocodeEngine(workingDir)
 
     // Add our own battle listener to the RobocodeEngine
-    engine.addBattleListener(new BattleObserver)
+    val battleObserver = new BattleObserver
+    engine.addBattleListener(battleObserver)
 
     engine.setVisible(false) // Don't invoke UI
 
@@ -41,6 +44,10 @@ class BattleRunner(
 
     engine.runBattle(battleSpec, true) // waits till the battle finishes
     engine.close() // Cleanup our RobocodeEngine
+
+    battleObserver.battleCompletedEventOpt map { completedEvent =>
+      BattleReport(completedEvent, battleSpec)
+    }
   }
 
   private def botSelectionSpecification(botClassnames: Set[String]): String = {
@@ -60,9 +67,14 @@ class BattleRunner(
 // Our private battle listener for handling the battle event we are interested in.
 //
 class BattleObserver extends BattleAdaptor {
+  private var myBattleCompletedEvent: Option[BattleCompletedEvent] = None
+
+  def battleCompletedEventOpt: Option[BattleCompletedEvent] = myBattleCompletedEvent
 
   // Called when the battle is completed successfully with battle results
   override def onBattleCompleted(e: BattleCompletedEvent): Unit = {
+    myBattleCompletedEvent = Some(e)
+
     System.out.println("-- Battle has completed --")
 
     // Print out the sorted results with the robot names

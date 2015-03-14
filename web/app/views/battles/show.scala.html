@@ -1,0 +1,19 @@
+@import se.ramn.models.BattleReport
+@(report: BattleReport)
+@main("Battle report") {
+  <h1>Battle report</h1>
+  <p>
+    <table cellpadding="1" cellspacing="1" border="1">
+      <tr>
+        <td>Robot</td>
+        <td>Score</td>
+      </tr>
+      @for(result <- report.completedEvent.getSortedResults) {
+        <tr>
+          <td>@result.getTeamLeaderName</td>
+          <td>@result.getScore</td>
+        </tr>
+      }
+    </table>
+  </p>
+}

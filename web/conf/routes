@@ -4,7 +4,7 @@
 
 # Home page
 GET    /                            controllers.Application.index
-GET    /battle                      controllers.Application.battle
+GET    /battles                     controllers.Battles.index
 GET    /bots                        controllers.Bots.index
 GET    /bots/add                    controllers.Bots.add
 GET    /bots/:id                    controllers.Bots.show(id)
