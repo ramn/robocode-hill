@@ -47,8 +47,8 @@
     <table cellpadding="1" cellspacing="1" border="1">
       <tr>
         <th>TeamLeaderName</th>
-        <th>Rank</th>
         <th>Score</th>
+        <th>Rank</th>
         <th>BulletDamage</th>
         <th>BulletDamageBonus</th>
         <th>LastSurvivorBonus</th>
@@ -62,8 +62,8 @@
       @for(result <- report.completedEvent.getSortedResults) {
         <tr>
           <td>@result.getTeamLeaderName</td>
-          <td>@result.getRank</td>
           <td>@result.getScore</td>
+          <td>@result.getRank</td>
           <td>@result.getBulletDamage</td>
           <td>@result.getBulletDamageBonus</td>
           <td>@result.getLastSurvivorBonus</td>
