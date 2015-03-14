@@ -20,7 +20,7 @@ class IntegrationSpec extends Specification {
 
       browser.goTo("http://localhost:" + port)
 
-      browser.pageSource must contain("All bots")
+      browser.pageSource must contain("Robocode Hill")
     }
   }
 }
