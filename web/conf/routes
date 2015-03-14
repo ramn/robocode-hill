@@ -8,6 +8,7 @@ GET    /battle                      controllers.Application.battle
 GET    /bots                        controllers.Bots.index
 GET    /bots/add                    controllers.Bots.add
 GET    /bots/:id                    controllers.Bots.show(id)
+GET    /bots/download/:id           controllers.Bots.download(id)
 POST   /bots                        controllers.Bots.create
 
 # Map static resources from the /public folder to the /assets URL path

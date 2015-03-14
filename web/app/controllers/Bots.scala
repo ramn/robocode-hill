@@ -42,6 +42,20 @@ object Bots extends Controller {
     }
   }
 
+  def download(id: String) = Action {
+    val botOpt = BotRepository.get(UUID.fromString(id))
+    botOpt match {
+      case Some(bot) =>
+        val oneYearInSecs = 31536000
+        Ok.sendFile(bot.persistedPath.toFile, inline=true)
+          .withHeaders(
+            CACHE_CONTROL -> s"max-age=$oneYearInSecs",
+            CONTENT_DISPOSITION -> s"attachment; filename=${bot.originalFilename}",
+            CONTENT_TYPE -> "application/java-archive")
+      case None => NotFound
+    }
+  }
+
   private def handleBotUpload(
     request: Request[MultipartFormData[TemporaryFile]]
   ): Either[String, Bot] = {
