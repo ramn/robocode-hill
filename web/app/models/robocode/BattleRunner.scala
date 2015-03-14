@@ -12,7 +12,7 @@ import robocode.control.events.BattleMessageEvent
 import robocode.control.events.BattleCompletedEvent
 import robocode.control.events.BattleAdaptor
 
-import se.ramn.models.BattleReport
+import se.ramn.models.RobocodeBattleReport
 
 
 class BattleRunner(
@@ -22,7 +22,7 @@ class BattleRunner(
   def this(workingDir: String) = this(new File(workingDir))
   def this(workingDir: Path) = this(workingDir.toAbsolutePath.normalize.toFile)
 
-  def run(): Option[BattleReport] = {
+  def run(): Option[RobocodeBattleReport] = {
     RobocodeEngine.setLogMessagesEnabled(false) // Disables Robocode logging
     val engine = new RobocodeEngine(workingDir)
 
@@ -46,7 +46,7 @@ class BattleRunner(
     engine.close() // Cleanup our RobocodeEngine
 
     battleObserver.battleCompletedEventOpt map { completedEvent =>
-      BattleReport(completedEvent, battleSpec)
+      RobocodeBattleReport(completedEvent, battleSpec)
     }
   }
 

@@ -11,15 +11,15 @@ import java.util.Properties
 
 import se.ramn.models.Bot
 import se.ramn.models.BotRepository
+import se.ramn.models.BattleRequest
 import se.ramn.models.BattleReport
-
-
-case class BattleSpecification(bots: Seq[Bot])
+import se.ramn.models.SuccessfulBattle
+import se.ramn.models.FailedBattle
 
 
 object RandomBattleground extends Battleground {
-  def run(): Option[BattleReport] = {
-    val specification = BattleSpecification(bots=generateBotSelection)
+  def run(): BattleReport = {
+    val specification = BattleRequest(bots=generateBotSelection)
     run(specification)
   }
 
@@ -35,15 +35,20 @@ object RandomBattleground extends Battleground {
 
 
 class Battleground {
-  def run(battleSpecification: BattleSpecification): Option[BattleReport] = {
+  def run(battleRequest: BattleRequest): BattleReport = {
     InTempDir { tempdir =>
       val robotdir = new File(tempdir, "robots")
-      val mainClasses = battleSpecification.bots map { bot =>
+      val mainClasses = battleRequest.bots map { bot =>
         unpackBotInSandbox(bot, robotdir)
       }
       val battleRunner = new BattleRunner(tempdir, mainClasses.toSet)
-      val battleReportOpt = battleRunner.run()
-      battleReportOpt
+      val robocodeBattleReportOpt = battleRunner.run()
+      robocodeBattleReportOpt match {
+        case Some(report) =>
+          SuccessfulBattle(battleRequest, report)
+        case None =>
+          FailedBattle(battleRequest)
+      }
     }
   }
 
