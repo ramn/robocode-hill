@@ -5,8 +5,9 @@ import java.io.File
 
 
 object Config {
-  private final val DataDir = Paths.get(sys.env("PWD")).resolve(sys.env("DATA_DIR"))
-  private final val DbDir: File = DataDir.resolve("db").toFile
+  private val dataDirRelative = sys.env.get("DATA_DIR").getOrElse("tmp/data")
+  private val DataDir = Paths.get(sys.env("PWD")).resolve(dataDirRelative)
+  private val DbDir: File = DataDir.resolve("db").toFile
 
   final val DbFile: File = DbDir.toPath.resolve("db").toFile
   final val BotDir: File = DataDir.resolve("bots").toFile
