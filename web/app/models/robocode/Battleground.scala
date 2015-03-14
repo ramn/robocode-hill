@@ -14,18 +14,13 @@ import se.ramn.models.BotRepository
 import se.ramn.models.BattleReport
 
 
-object RandomBattleground {
+case class BattleSpecification(bots: Seq[Bot])
+
+
+object RandomBattleground extends Battleground {
   def run(): Option[BattleReport] = {
-    InTempDir { tempdir =>
-      val botSelection = generateBotSelection
-      val robotdir = new File(tempdir, "robots")
-      val mainClasses = botSelection map { bot =>
-        unpackBotInSandbox(bot, robotdir)
-      }
-      val battleRunner = new BattleRunner(tempdir, mainClasses.toSet)
-      val battleReportOpt = battleRunner.run()
-      battleReportOpt
-    }
+    val specification = BattleSpecification(bots=generateBotSelection)
+    run(specification)
   }
 
   private def generateBotSelection: Seq[Bot] = {
@@ -35,6 +30,21 @@ object RandomBattleground {
       .take(2)
       .map(ix => indexedBots(ix))
       .toIndexedSeq
+  }
+}
+
+
+class Battleground {
+  def run(battleSpecification: BattleSpecification): Option[BattleReport] = {
+    InTempDir { tempdir =>
+      val robotdir = new File(tempdir, "robots")
+      val mainClasses = battleSpecification.bots map { bot =>
+        unpackBotInSandbox(bot, robotdir)
+      }
+      val battleRunner = new BattleRunner(tempdir, mainClasses.toSet)
+      val battleReportOpt = battleRunner.run()
+      battleReportOpt
+    }
   }
 
   /*
