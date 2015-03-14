@@ -4,6 +4,7 @@ import java.io.File
 import java.io.FileFilter
 import java.util.UUID
 import collection.immutable.Seq
+import scala.util.Try
 
 //import play.api._
 import play.api.mvc._
@@ -22,10 +23,10 @@ object Bots extends Controller {
   }
 
   def show(id: String) = Action {
-    val botOpt = BotRepository.get(UUID.fromString(id))
+    val botOpt = Try(BotRepository.get(UUID.fromString(id))).toOption.flatten
     botOpt match {
       case Some(bot) => Ok(views.html.bots.show(bot))
-      case None => NotFound
+      case None => NotFound("404 Not Found")
     }
   }
 
