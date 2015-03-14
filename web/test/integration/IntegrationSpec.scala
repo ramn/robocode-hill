@@ -1,3 +1,5 @@
+package se.ramn.integration
+
 import org.specs2.mutable._
 import org.specs2.runner._
 import org.junit.runner._
@@ -18,7 +20,7 @@ class IntegrationSpec extends Specification {
 
       browser.goTo("http://localhost:" + port)
 
-      browser.pageSource must contain("Your new application is ready.")
+      browser.pageSource must contain("All bots")
     }
   }
 }

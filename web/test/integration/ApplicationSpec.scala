@@ -1,3 +1,5 @@
+package se.ramn.integration
+
 import org.specs2.mutable._
 import org.specs2.runner._
 import org.junit.runner._
@@ -20,11 +22,11 @@ class ApplicationSpec extends Specification {
     }
 
     "render the index page" in new WithApplication{
-      val home = route(FakeRequest(GET, "/")).get
+      val home = route(FakeRequest(GET, "/bots")).get
 
       status(home) must equalTo(OK)
       contentType(home) must beSome.which(_ == "text/html")
-      contentAsString(home) must contain ("Your new application is ready.")
+      contentAsString(home) must contain ("Bots")
     }
   }
 }
