@@ -1,23 +1,23 @@
-@import se.ramn.models.SuccessfulBattle
-@(report: SuccessfulBattle)
+@import se.ramn.models.BattleReportView
+@import se.ramn.models.ScoreRecord
+@(report: BattleReportView)
 @main("Battle report") {
   <h1>Battle report</h1>
 
   <dl>
     <dt>Number of rounds</dt>
-    <dd>@report.robocodeBattleReport.battleSpecification.getNumRounds</dd>
+    <dd>@report.battleSpecification.getNumRounds</dd>
 
     <dt>Battlefield height</dt>
     <dd>
       @(report
-      .robocodeBattleReport
       .battleSpecification
       .getBattlefield
       .getHeight)
     </dd>
 
     <dt>Battlefield width</dt>
-    <dd>@report.robocodeBattleReport.battleSpecification.getBattlefield.getWidth</dd>
+    <dd>@report.battleSpecification.getBattlefield.getWidth</dd>
 
   </dl>
 
@@ -35,7 +35,7 @@
         <th>Description</th>
       </tr>
 
-      @for(robotspec <- report.robocodeBattleReport.battleSpecification.getRobots) {
+      @for(robotspec <- report.battleSpecification.getRobots) {
         <tr>
           <td>@robotspec.getAuthorName</td>
           <td>@robotspec.getClassName</td>
@@ -67,9 +67,13 @@
         <th>Seconds</th>
         <th>Thirds</th>
       </tr>
-      @for(result <- report.robocodeBattleReport.completedEvent.getSortedResults) {
+      @for(ScoreRecord(bot, result) <- report.scoreRecordsByScore) {
         <tr>
-          <td>@result.getTeamLeaderName</td>
+          <td>
+            <a href="@routes.Bots.show(bot.id.toString)">
+              @result.getTeamLeaderName
+            </a>
+          </td>
           <td>@result.getScore</td>
           <td>@result.getRank</td>
           <td>@result.getBulletDamage</td>
