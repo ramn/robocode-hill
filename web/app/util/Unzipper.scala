@@ -41,7 +41,8 @@ object JarExtractor {
 
 trait JarExtractorDelegate {
   /*
-   * Called for each entry found in the Jar file, before that entry is being extracted.
+   * Called for each entry found in the Jar file, before that entry is being
+   * extracted.
    *
    * If this method returns false the entry is not extracted.
    */
