@@ -12,29 +12,43 @@ As simple as running the deploy script:
 
     ./deploy
 
+Server setup
+============
+
+Install Java Runtime 8.
+
+Add user for running app:
+
+    adduser --disabled-password robocode
+
 The host needs to have nginx running, with the configuration below.
 
 Nginx config
 ------------
 
-    server {
-      listen 80;
-      server_name robocode.ramn.se;
+```
+server {
+  listen 80;
+  server_name robocode.ramn.se;
 
-      include       mime.types;
-      default_type  application/octet-stream;
+  root /usr/share/nginx/html;
+  index index.html index.htm;
 
-      sendfile        on;
-      #keepalive_timeout  65;
+  include       mime.types;
+  default_type  application/octet-stream;
 
-      proxy_buffering    off;
-      proxy_set_header   X-Real-IP $remote_addr;
-      proxy_set_header   X-Scheme $scheme;
-      proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header   Host $http_host;
-      proxy_http_version 1.1;
+  sendfile        on;
+  #keepalive_timeout  65;
 
-      location / {
-        proxy_pass http://127.0.0.1:9000;
-      }
-    }
+  proxy_buffering    off;
+  proxy_set_header   X-Real-IP $remote_addr;
+  proxy_set_header   X-Scheme $scheme;
+  proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header   Host $http_host;
+  proxy_http_version 1.1;
+
+  location / {
+    proxy_pass http://127.0.0.1:9000;
+  }
+}
+```
