@@ -21,5 +21,5 @@ class BattleReportView(report: SuccessfulBattle) {
   val scoreRecordsByScore =
     (battleRequest.bots zip indexedResults)
     .map(ScoreRecord.tupled)
-    .sortBy(_.battleResults.getScore)
+    .sortBy(_.battleResults.getScore * -1)
 }
