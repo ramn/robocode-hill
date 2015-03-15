@@ -7,23 +7,24 @@ import collection.immutable.Set
 import org.mapdb.DB
 
 
-object BotRepository {
-  def get(id: UUID): Option[Bot] = {
+object BattleRepository {
+  def get(id: UUID): Option[Battle] = {
     Db.inTx { db =>
       table(db).get(id)
     }
   }
 
-  def all: Set[Bot] = Db.inTx { db =>
+  def all: Set[Battle] = Db.inTx { db =>
     table(db).values.toSet
   }
 
-  def put(bot: Bot) = {
+  def put(battle: Battle) = {
     Db.inTx { db =>
-      table(db).put(bot.id, bot)
+      table(db).put(battle.id, battle)
+      ()
     }
   }
 
   private def table(db: DB) =
-    db.getTreeMap[UUID, Bot](DbTable.bots.toString).asScala
+    db.getTreeMap[UUID, Battle](DbTable.battles.toString).asScala
 }
