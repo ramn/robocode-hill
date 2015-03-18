@@ -32,7 +32,8 @@ class BattleRunner(
     // Setup the battle specification
     val numberOfRounds = 5
     val battlefield = new BattlefieldSpecification(800, 600)
-    val selectedRobots = engine.getLocalRepository(botSelectionSpecification(botClassnames))
+    val selectedRobots =
+      engine.getLocalRepository(botSelectionSpecification(botClassnames))
     val battleSpec = new BattleSpecification(
       numberOfRounds,
       battlefield,
