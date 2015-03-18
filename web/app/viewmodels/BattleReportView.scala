@@ -9,7 +9,8 @@ import org.joda.time.DateTimeZone
 import se.ramn.models.Battle
 import se.ramn.models.BattleRequest
 import se.ramn.models.BattleSpecification
-import se.ramn.models.BotRepository
+import se.ramn.models.v2.BotRepository
+import se.ramn.models.v2.BotVersionRepository
 import se.ramn.models.RobotBattleResult
 
 
@@ -20,10 +21,14 @@ class BattleReportView(
   val specification: BattleSpecification,
   val createdAt: DateTime
 ) {
-  require(request.bots.size == robotResults.size)
+  require(
+    request.botVersions.size == robotResults.size,
+    s"request.botVersions.size ${request.botVersions.size} not equal to " +
+    s"robotResults.size ${robotResults.size}"
+    )
 
   val scoreRecordsByScore =
-    (request.bots zip robotResults)
+    (request.botVersions zip robotResults)
     .map(ScoreRecord.tupled)
     .sortBy(_.battleResult.score * -1)
 }
@@ -31,7 +36,8 @@ class BattleReportView(
 
 object BattleReportView {
   def apply(battle: Battle) = {
-    val request = BattleRequest(battle.botIds.flatMap(BotRepository.get))
+    val botVersions = battle.botVersionIds.flatMap(BotVersionRepository.get)
+    val request = BattleRequest(botVersions)
     new BattleReportView(
       battle.id,
       request,

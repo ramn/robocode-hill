@@ -1,4 +1,6 @@
-@(flashMsg: Option[String])
+@import se.ramn.models.v2.Bot
+
+@(forBot: Bot, flashMsg: Option[String])
 @main("Upload your bot") {
   @for(msg <- flashMsg) {
     <p>
@@ -6,7 +8,10 @@
     </p>
   }
 
-  @helper.form(action = routes.Bots.create, 'enctype -> "multipart/form-data") {
+  @helper.form(
+    action = routes.BotVersions.create(forBot.id.toString),
+    'enctype -> "multipart/form-data"
+  ) {
     <p>Upload bot (jar)</p>
     <input type="file" name="bot">
     <p>

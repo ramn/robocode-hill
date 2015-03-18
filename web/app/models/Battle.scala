@@ -14,7 +14,7 @@ import org.joda.time.DateTimeZone
 
 case class Battle(
   id: UUID = UUID.randomUUID,
-  botIds: Seq[UUID],
+  botVersionIds: Seq[UUID],
   robotResults: Seq[RobotBattleResult],
   specification: BattleSpecification,
   createdAt: DateTime = DateTime.now(DateTimeZone.UTC)

@@ -6,11 +6,19 @@
 GET    /                            controllers.Application.index
 GET    /battles                     controllers.Battles.index
 POST   /battles                     controllers.Battles.create
+
 GET    /bots                        controllers.Bots.index
-GET    /bots/add                    controllers.Bots.add
+#GET    /bots/add                    controllers.Bots.add
 GET    /bots/:id                    controllers.Bots.show(id)
-GET    /bots/download/:id           controllers.Bots.download(id)
+GET    /bots/:id/add                controllers.BotVersions.add(id)
+#GET    /bots/download/:id           controllers.Bots.download(id)
 POST   /bots                        controllers.Bots.create
+
+#GET    /botversions                 controllers.BotVersions.index
+GET    /botversions/:id             controllers.BotVersions.show(id)
+GET    /botversions/download/:id    controllers.BotVersions.download(id)
+POST   /bots/:id/                   controllers.BotVersions.create(id)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

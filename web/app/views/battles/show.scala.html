@@ -67,10 +67,10 @@
         <th>Seconds</th>
         <th>Thirds</th>
       </tr>
-      @for(ScoreRecord(bot, result) <- report.scoreRecordsByScore) {
+      @for(ScoreRecord(botVersion, result) <- report.scoreRecordsByScore) {
         <tr>
           <td>
-            <a href="@routes.Bots.show(bot.id.toString)">
+            <a href="@routes.BotVersions.show(botVersion.id.toString)">
               @result.teamLeaderName
             </a>
           </td>

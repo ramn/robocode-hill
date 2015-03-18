@@ -43,7 +43,7 @@ object Battles extends Controller {
       robotResults
     ) = successfulBattle
     val battle = Battle(
-      botIds=request.bots.map(_.id),
+      botVersionIds=request.botVersions.map(_.id),
       specification=specification,
       robotResults=robotResults)
     BattleRepository.put(battle)

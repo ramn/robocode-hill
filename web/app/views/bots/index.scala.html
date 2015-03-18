@@ -1,4 +1,5 @@
-@import se.ramn.models.Bot
+@import se.ramn.models.v2.Bot
+
 @(bots: Iterable[Bot])
 @main("Bots") {
   <h1>All bots</h1>
@@ -12,18 +13,16 @@
           <a href="@routes.Bots.show(bot.id.toString)">@bot.id</a>
         </dd>
 
-        <dt>Filename</dt>
+        <dt>Name</dt>
         <dd>
-          <a href="@routes.Bots.download(bot.id.toString)">
-            @bot.originalFilename
-          </a>
-        </dt>
+          @bot.name
+        </dd>
 
-        <dt>Size bytes</dt>
-        <dd>@bot.sizeBytes</dd>
-
-        <dt>Uploaded at</dt>
+        <dt>Created at</dt>
         <dd>@bot.createdAt</dd>
+
+        <dt>Modified at</dt>
+        <dd>@bot.modifiedAt</dd>
       </dl>
     </p>
   }

@@ -1,27 +1,56 @@
-@import se.ramn.models.Bot
-@(bot: Bot)
+@import se.ramn.models.v2.Bot
+@import se.ramn.models.v2.BotVersion
+@(bot: Bot, latestVersionOpt: Option[BotVersion])
 @main("Show bot") {
   <h1>Show bot</h1>
   <p><a href="/bots">Show all bots</a></p>
-  <p><a href="/bots/add">Upload new bot</a></p>
+  <p>
+    <a href="@routes.BotVersions.add(bot.id.toString)">
+      Upload new version of this bot
+    </a>
+  </p>
 
   <p>
     <dl>
       <dt>Id</dt>
       <dd>@bot.id</dd>
 
+      <dt>Name</dt>
+      <dd>@bot.name</dd>
+
+      <dt>Created at</dt>
+      <dd>@bot.createdAt</dd>
+
+      <dt>Modified at</dt>
+      <dd>@bot.modifiedAt</dd>
+    </dl>
+
+    @for(botVersion <- latestVersionOpt) {
+    <h2>Latest bot version</h2>
+    <dl>
+      <dt>Version id</dt>
+      <dd>
+        <a href="@routes.BotVersions.show(botVersion.id.toString)">
+          @botVersion.id
+        </a>
+      </dd>
+
       <dt>Filename</dt>
       <dd>
-        <a href="@routes.Bots.download(bot.id.toString)">
-          @bot.originalFilename
+        <a href="@routes.BotVersions.download(botVersion.id.toString)">
+          @botVersion.originalFilename
         </a>
       </dt>
 
       <dt>Size bytes</dt>
-      <dd>@bot.sizeBytes</dd>
+      <dd>@botVersion.sizeBytes</dd>
 
-      <dt>Uploaded at</dt>
-      <dd>@bot.createdAt</dd>
+      <dt>Created at</dt>
+      <dd>@botVersion.createdAt</dd>
+
+      <dt>Modified at</dt>
+      <dd>@botVersion.modifiedAt</dd>
     </dl>
+    }
   </p>
 }

@@ -1,0 +1,37 @@
+@import se.ramn.models.v2.Bot
+@import se.ramn.models.v2.BotVersion
+
+@(bot: Bot, botVersion: BotVersion)
+@main("Show bot version") {
+  <h1>Show bot version</h1>
+  <p><a href="/bots">Show all bots</a></p>
+
+  <p>
+    <dl>
+      <dt>Bot name</dt>
+      <dd>@bot.name</dd>
+
+      <dt>Version id</dt>
+      <dd>@botVersion.id</dd>
+
+      <dt>Bot id</dt>
+      <dd>@bot.id</dd>
+
+      <dt>Filename</dt>
+      <dd>
+        <a href="@routes.BotVersions.download(botVersion.id.toString)">
+          @botVersion.originalFilename
+        </a>
+      </dt>
+
+      <dt>Size bytes</dt>
+      <dd>@botVersion.sizeBytes</dd>
+
+      <dt>Created at</dt>
+      <dd>@botVersion.createdAt</dd>
+
+      <dt>Modified at</dt>
+      <dd>@botVersion.modifiedAt</dd>
+    </dl>
+  </p>
+}

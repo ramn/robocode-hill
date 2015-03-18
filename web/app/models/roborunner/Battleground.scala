@@ -9,8 +9,10 @@ import java.nio.file.Path
 import java.nio.file.Files
 import java.util.Properties
 
-import se.ramn.models.Bot
-import se.ramn.models.BotRepository
+import se.ramn.models.v2.Bot
+import se.ramn.models.v2.BotRepository
+import se.ramn.models.v2.BotVersion
+import se.ramn.models.v2.BotVersionRepository
 import se.ramn.models.BattleRequest
 import se.ramn.models.BattleReport
 import se.ramn.models.SuccessfulBattle
@@ -21,7 +23,8 @@ import se.ramn.models.BattleSpecification
 
 object RandomBattleground extends Battleground {
   def run(): BattleReport = {
-    val specification = BattleRequest(bots=generateBotSelection)
+    val botVersions = generateBotSelection.flatMap(_.latestVersion)
+    val specification = BattleRequest(botVersions=botVersions)
     run(specification)
   }
 
@@ -40,8 +43,8 @@ class Battleground {
   def run(battleRequest: BattleRequest): BattleReport = {
     InTempDir { tempdir =>
       val robotdir = new File(tempdir, "robots")
-      val mainClasses = battleRequest.bots map { bot =>
-        unpackBotInSandbox(bot, robotdir)
+      val mainClasses = battleRequest.botVersions map { botVersion =>
+        unpackBotInSandbox(botVersion, robotdir)
       }
       val battleRunner = new BattleRunner(tempdir, mainClasses)
       val battleRunnerResultOpt = battleRunner.run()
@@ -60,9 +63,12 @@ class Battleground {
   /*
    * Returns main class for bot
    */
-  private def unpackBotInSandbox(bot: Bot, tempdir: File): String = {
+  private def unpackBotInSandbox(
+    botVersion: BotVersion,
+    tempdir: File
+  ): String = {
     val botExtractorDelegate = new BotExtractorDelegate
-    val botFile = bot.persistedPath.toFile
+    val botFile = botVersion.persistedPath.toFile
     JarExtractor.deflate(botFile, tempdir, botExtractorDelegate)
     extractMainClassName(botExtractorDelegate)
   }
