@@ -15,6 +15,7 @@ import se.ramn.models.BattleRequest
 import se.ramn.models.BattleReport
 import se.ramn.models.SuccessfulBattle
 import se.ramn.models.FailedBattle
+import se.ramn.models.RobotBattleResult
 
 
 object RandomBattleground extends Battleground {
@@ -42,10 +43,13 @@ class Battleground {
         unpackBotInSandbox(bot, robotdir)
       }
       val battleRunner = new BattleRunner(tempdir, mainClasses)
-      val robocodeBattleReportOpt = battleRunner.run()
-      robocodeBattleReportOpt match {
+      val battleRunnerResultOpt = battleRunner.run()
+      battleRunnerResultOpt match {
         case Some(report) =>
-          SuccessfulBattle(battleRequest, report)
+          SuccessfulBattle(
+            battleRequest=battleRequest,
+            battleSpecification=report.battleSpecification,
+            robotBattleResults=RobotBattleResult.from(report.completedEvent))
         case None =>
           FailedBattle(battleRequest)
       }

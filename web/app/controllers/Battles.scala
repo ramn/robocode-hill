@@ -11,7 +11,6 @@ import se.ramn.models.BattleReport
 import se.ramn.models.BattleReportView
 import se.ramn.models.BattleRepository
 import se.ramn.models.FailedBattle
-import se.ramn.models.RobocodeBattleReport
 import se.ramn.models.SuccessfulBattle
 import se.ramn.Joda.dateTimeOrdering
 
@@ -40,11 +39,12 @@ object Battles extends Controller {
   private def persistBattle(successfulBattle: SuccessfulBattle): Battle = {
     val SuccessfulBattle(
       battleRequest,
-      RobocodeBattleReport(completedEvent, battleSpecification)
+      battleSpecification,
+      robotBattleResults
     ) = successfulBattle
     val battle = Battle(
       botIds=battleRequest.bots.map(_.id),
-      completedEvent=completedEvent,
+      robotBattleResults=robotBattleResults,
       battleSpecification=battleSpecification)
     BattleRepository.put(battle)
     battle

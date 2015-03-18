@@ -6,7 +6,7 @@ import robocode.control.events.BattleMessageEvent
 import robocode.control.events.BattleCompletedEvent
 
 
-class BattleObserver extends BattleAdaptor {
+private class BattleObserver extends BattleAdaptor {
   private var myBattleCompletedEvent: Option[BattleCompletedEvent] = None
 
   def battleCompletedEventOpt: Option[BattleCompletedEvent] = myBattleCompletedEvent
