@@ -10,13 +10,12 @@ import java.util.UUID
 
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
-import robocode.control.BattleSpecification
 
 
 case class Battle(
   id: UUID = UUID.randomUUID,
   botIds: Seq[UUID],
-  robotBattleResults: Seq[RobotBattleResult],
-  battleSpecification: BattleSpecification,
+  robotResults: Seq[RobotBattleResult],
+  specification: BattleSpecification,
   createdAt: DateTime = DateTime.now(DateTimeZone.UTC)
 )

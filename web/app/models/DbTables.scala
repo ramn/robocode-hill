@@ -4,5 +4,6 @@ package se.ramn.models
 object DbTable extends Enumeration {
   type DbTable = Value
   val bots = Value("bots")
-  val battles = Value("battles")
+  val battles = Value("battles2") // "battles" table is broken!
+  val migrations = Value("migrations")
 }

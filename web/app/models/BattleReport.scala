@@ -2,17 +2,16 @@ package se.ramn
 package models
 
 import collection.immutable.Seq
-import robocode.control.BattleSpecification
 
 
 sealed trait BattleReport
 
 
 case class SuccessfulBattle(
-	battleRequest: BattleRequest,
-	battleSpecification: BattleSpecification,
-	robotBattleResults: Seq[RobotBattleResult]
+	request: BattleRequest,
+	specification: BattleSpecification,
+	robotResults: Seq[RobotBattleResult]
 ) extends BattleReport
 
 
-case class FailedBattle(battleRequest: BattleRequest) extends BattleReport
+case class FailedBattle(request: BattleRequest) extends BattleReport

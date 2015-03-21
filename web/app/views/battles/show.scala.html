@@ -1,26 +1,25 @@
-@import se.ramn.models.BattleReportView
-@import se.ramn.models.ScoreRecord
+@import se.ramn.viewmodels.BattleReportView
+@import se.ramn.viewmodels.ScoreRecord
+
 @(report: BattleReportView)
 @main("Battle report") {
   <h1>Battle report</h1>
 
   <dl>
     <dt>Number of rounds</dt>
-    <dd>@report.battleSpecification.getNumRounds</dd>
+    <dd>@report.specification.numRounds</dd>
 
     <dt>Battlefield height</dt>
     <dd>
-      @(report
-      .battleSpecification
-      .getBattlefield
-      .getHeight)
+      @(report.specification.battlefieldHeight)
     </dd>
 
     <dt>Battlefield width</dt>
-    <dd>@report.battleSpecification.getBattlefield.getWidth</dd>
+    <dd>@report.specification.battlefieldWidth</dd>
 
   </dl>
 
+@**********
   <h2>Participants</h2>
   <p>
     <table cellpadding="1" cellspacing="1" border="1">
@@ -35,20 +34,21 @@
         <th>Description</th>
       </tr>
 
-      @for(robotspec <- report.battleSpecification.getRobots) {
+      @for(robotspec <- report.specification.robots) {
         <tr>
-          <td>@robotspec.getAuthorName</td>
-          <td>@robotspec.getClassName</td>
-          <td>@robotspec.getName</td>
-          <td>@robotspec.getVersion</td>
-          <td>@robotspec.getRobocodeVersion</td>
-          <td>@robotspec.getTeamId</td>
-          <td>@robotspec.getWebpage</td>
-          <td>@robotspec.getDescription</td>
+          <td>@robotspec.authorName</td>
+          <td>@robotspec.className</td>
+          <td>@robotspec.name</td>
+          <td>@robotspec.version</td>
+          <td>@robotspec.robocodeVersion</td>
+          <td>@robotspec.teamId</td>
+          <td>@robotspec.webpage</td>
+          <td>@robotspec.description</td>
         </tr>
       }
     </table>
   </p>
+*****************@
 
   <h2>Score</h2>
   <p>

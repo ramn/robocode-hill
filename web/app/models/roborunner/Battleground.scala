@@ -16,6 +16,7 @@ import se.ramn.models.BattleReport
 import se.ramn.models.SuccessfulBattle
 import se.ramn.models.FailedBattle
 import se.ramn.models.RobotBattleResult
+import se.ramn.models.BattleSpecification
 
 
 object RandomBattleground extends Battleground {
@@ -47,9 +48,9 @@ class Battleground {
       battleRunnerResultOpt match {
         case Some(report) =>
           SuccessfulBattle(
-            battleRequest=battleRequest,
-            battleSpecification=report.battleSpecification,
-            robotBattleResults=RobotBattleResult.from(report.completedEvent))
+            request=battleRequest,
+            specification=BattleSpecification.from(report.battleSpecification),
+            robotResults=RobotBattleResult.from(report.completedEvent))
         case None =>
           FailedBattle(battleRequest)
       }

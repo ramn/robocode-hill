@@ -8,10 +8,10 @@ import org.joda.time.DateTime
 import se.ramn.roborunner.RandomBattleground
 import se.ramn.models.Battle
 import se.ramn.models.BattleReport
-import se.ramn.models.BattleReportView
 import se.ramn.models.BattleRepository
 import se.ramn.models.FailedBattle
 import se.ramn.models.SuccessfulBattle
+import se.ramn.viewmodels.BattleReportView
 import se.ramn.Joda.dateTimeOrdering
 
 
@@ -38,14 +38,14 @@ object Battles extends Controller {
 
   private def persistBattle(successfulBattle: SuccessfulBattle): Battle = {
     val SuccessfulBattle(
-      battleRequest,
-      battleSpecification,
-      robotBattleResults
+      request,
+      specification,
+      robotResults
     ) = successfulBattle
     val battle = Battle(
-      botIds=battleRequest.bots.map(_.id),
-      robotBattleResults=robotBattleResults,
-      battleSpecification=battleSpecification)
+      botIds=request.bots.map(_.id),
+      specification=specification,
+      robotResults=robotResults)
     BattleRepository.put(battle)
     battle
   }
