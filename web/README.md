@@ -12,6 +12,18 @@ As simple as running the deploy script:
 
     ./deploy
 
+
+Uploading a bot version using curl
+==================================
+
+Example of how to upload a new bot version using curl:
+
+    curl -F "bot=@my-bot-0.1-SNAPSHOT.jar;type=application/java-archive" \
+      "http://localhost:9000/bots/cb8607e6-7427-4e94-bc5a-174a6ec1c495"
+
+Replace the UUID with the id of your bot.
+
+
 Server setup
 ============
 
