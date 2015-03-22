@@ -6,6 +6,7 @@ import collection.immutable.Seq
 import org.joda.time.DateTime
 
 import se.ramn.roborunner.RandomBattleground
+import se.ramn.roborunner.LastModifiedBattleground
 import se.ramn.models.Battle
 import se.ramn.models.BattleReport
 import se.ramn.models.BattleRepository
@@ -25,7 +26,24 @@ object Battles extends Controller {
   }
 
   def create = Action { request =>
-    val battleReport = RandomBattleground.run
+    val battleground = requestedSelectionStrategy(request) match {
+      case Some("random") => RandomBattleground
+      case Some("lastModified") => LastModifiedBattleground
+      case _ => RandomBattleground
+    }
+    println(s"Executing battle using battleground $battleground")
+    val battleReport = battleground.run()
+    responseFromBattleReport(battleReport)
+  }
+
+  private def requestedSelectionStrategy(
+    request: Request[AnyContent]
+  ): Option[String] = {
+    val payload = request.body.asFormUrlEncoded
+    payload.get("selectionStrategy").headOption
+  }
+
+  private def responseFromBattleReport(battleReport: BattleReport) = {
     battleReport match {
       case successfulBattle: SuccessfulBattle =>
         val battle = persistBattle(successfulBattle)

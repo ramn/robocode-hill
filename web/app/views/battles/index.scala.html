@@ -5,11 +5,21 @@
 @(battleReports: Seq[BattleReportView])
 
 @main("Battles") {
+  <h1>Battles</h1>
   <h2>Initiate new battle</h2>
   @helper.form(action = routes.Battles.create) {
-    <p>Run a battle between two randomly chosen bots</p>
     <p>
-      <input type="submit" value="Execute battle" />
+      <input type="hidden" name="selectionStrategy" value="random" />
+      <input type="submit" name="submit" value="Execute battle" />
+      <label for="submit">Run a battle between two randomly chosen bots</label>
+    </p>
+  }
+
+  @helper.form(action = routes.Battles.create) {
+    <p>
+      <input type="hidden" name="selectionStrategy" value="lastModified" />
+      <input type="submit" name="submit" value="Execute battle" />
+      <label for="submit">Run a battle between the two last updated bots</label>
     </p>
   }
 

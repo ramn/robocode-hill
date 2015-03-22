@@ -21,7 +21,12 @@ import se.ramn.models.RobotBattleResult
 import se.ramn.models.BattleSpecification
 
 
-object RandomBattleground extends Battleground {
+trait PreparedBattleground extends Battleground {
+  def run(): BattleReport
+}
+
+
+object RandomBattleground extends PreparedBattleground {
   def run(): BattleReport = {
     val botVersions = generateBotSelection.flatMap { bot =>
       BotVersionRepository.lastVersionForBot(bot.id)
@@ -37,6 +42,28 @@ object RandomBattleground extends Battleground {
       .take(2)
       .map(ix => indexedBots(ix))
       .toIndexedSeq
+  }
+}
+
+
+object LastModifiedBattleground extends PreparedBattleground {
+  val nrOfBots = 2
+
+  def run(): BattleReport = {
+    run(BattleRequest(botVersions))
+  }
+
+  private def botVersions = {
+    latestModified.flatMap { bot =>
+      BotVersionRepository.lastVersionForBot(bot.id)
+    }
+  } ensuring (_.size == nrOfBots)
+
+  private def latestModified: Seq[Bot] = {
+    BotRepository.all
+      .toIndexedSeq
+      .sortBy(_.modifiedAt)
+      .takeRight(nrOfBots)
   }
 }
 
