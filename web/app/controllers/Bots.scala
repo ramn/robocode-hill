@@ -68,8 +68,11 @@ object Bots extends Controller {
   }
 
   private def botIndexView = {
+    val bots = listBots
+      .toIndexedSeq
+      .sortBy(_.modifiedAt)(dateTimeOrdering.reverse)
     val botViews = for {
-      bot <- listBots.toIndexedSeq.sortBy(_.modifiedAt)
+      bot <- bots
       owner <- UserRepository.get(bot.ownerId)
     } yield BotIndexView.BotView(bot, owner)
     BotIndexView(botViews)
