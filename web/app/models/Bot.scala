@@ -18,16 +18,16 @@ import se.ramn.Joda.dateTimeOrdering
 
 
 // Deprecated, migrate and then remove
-case class Bot(
-  id: UUID = UUID.randomUUID,
-  originalFilename: String,
-  contentType: String,
-  sizeBytes: Long,
-  createdAt: DateTime = DateTime.now(DateTimeZone.UTC)
-) {
-  def persistedFilename: String = id.toString + ".jar"
-  def persistedPath: Path = Config.BotDir.toPath.resolve(persistedFilename)
-}
+//case class Bot(
+//  id: UUID = UUID.randomUUID,
+//  originalFilename: String,
+//  contentType: String,
+//  sizeBytes: Long,
+//  createdAt: DateTime = DateTime.now(DateTimeZone.UTC)
+//) {
+//  def persistedFilename: String = id.toString + ".jar"
+//  def persistedPath: Path = Config.BotDir.toPath.resolve(persistedFilename)
+//}
 
 
 package v2 {

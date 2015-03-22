@@ -8,26 +8,26 @@ import org.mapdb.DB
 
 
 package v1 {
-  object BotRepository {
-    def get(id: UUID): Option[Bot] = {
-      Db.inTx { db =>
-        table(db).get(id)
-      }
-    }
-
-    def all: Set[Bot] = Db.inTx { db =>
-      table(db).values.toSet
-    }
-
-    def put(bot: Bot) = {
-      Db.inTx { db =>
-        table(db).put(bot.id, bot)
-      }
-    }
-
-    private def table(db: DB) =
-      db.getTreeMap[UUID, Bot](DbTable.bots.toString).asScala
-  }
+//  object BotRepository {
+//    def get(id: UUID): Option[Bot] = {
+//      Db.inTx { db =>
+//        table(db).get(id)
+//      }
+//    }
+//
+//    def all: Set[Bot] = Db.inTx { db =>
+//      table(db).values.toSet
+//    }
+//
+//    def put(bot: Bot) = {
+//      Db.inTx { db =>
+//        table(db).put(bot.id, bot)
+//      }
+//    }
+//
+//    private def table(db: DB) =
+//      db.getTreeMap[UUID, Bot](DbTable.bots.toString).asScala
+//  }
 }
 
 

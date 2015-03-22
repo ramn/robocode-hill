@@ -1,11 +1,13 @@
 @import se.ramn.models.v2.Bot
+@import se.ramn.viewmodels.BotIndexView
+@import se.ramn.viewmodels.BotIndexView.BotView
 
-@(bots: Iterable[Bot])
+@(botIndexView: BotIndexView)
 @main("Bots") {
   <h1>All bots</h1>
   <p><a href="/bots/add">Upload new bot</a></p>
 
-  @for(bot <- bots) {
+  @for(BotView(bot, owner) <- botIndexView.botViews) {
     <p>
       <dl>
         <dt>Id</dt>
@@ -14,9 +16,10 @@
         </dd>
 
         <dt>Name</dt>
-        <dd>
-          @bot.name
-        </dd>
+        <dd>@bot.name</dd>
+
+        <dt>Owner name</dt>
+        <dd>@owner.name</dd>
 
         <dt>Created at</dt>
         <dd>@bot.createdAt</dd>

@@ -1,0 +1,26 @@
+@(flashMsg: Option[String])
+@main("Upload your bot") {
+  @for(msg <- flashMsg) {
+    <p>
+      @msg
+    </p>
+  }
+
+  @helper.form(action = routes.Bots.create) {
+    <h1>Create new bot</h1>
+
+    <p>
+      <label for="botName">Name of bot</label>
+      <input name="botName" id="botName">
+    </p>
+
+    <p>
+      <label for="ownerName">Your username</label>
+      <input name="ownerName" id="ownerName">
+    </p>
+
+    <p>
+      <input type="submit">
+    </p>
+  }
+}

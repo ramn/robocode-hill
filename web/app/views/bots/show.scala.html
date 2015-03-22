@@ -1,8 +1,8 @@
 @import scala.collection.immutable.Seq
-@import se.ramn.models.v2.Bot
-@import se.ramn.models.v2.BotVersion
+@import se.ramn.viewmodels.BotShowView
 
-@(bot: Bot, latestVersionOpt: Option[BotVersion], versions: Seq[BotVersion])
+@(botView: BotShowView)
+@import botView._
 
 @main("Show bot") {
   <h1>Show bot</h1>
@@ -20,6 +20,9 @@
 
       <dt>Name</dt>
       <dd>@bot.name</dd>
+
+      <dt>Owner name</dt>
+      <dd>@owner.name</dd>
 
       <dt>Created at</dt>
       <dd>@bot.createdAt</dd>

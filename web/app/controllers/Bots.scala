@@ -18,27 +18,34 @@ import se.ramn.models.v1.UserRepository
 import se.ramn.models.v2.Bot
 import se.ramn.models.v2.BotRepository
 import se.ramn.models.v2.BotVersionRepository
+import se.ramn.viewmodels.BotShowView
+import se.ramn.viewmodels.BotIndexView
+import se.ramn.Joda.dateTimeOrdering
 
 
 object Bots extends Controller {
 
   def index = Action {
-    Ok(views.html.bots.index(listBots))
+    Ok(views.html.bots.index(botIndexView))
   }
 
   def show(id: String) = Action {
-    loadBot(id).right.map { bot =>
+    val resultEither = for {
+      bot <- loadBot(id).right
+      owner <- loadOwner(bot).right
+    } yield {
       val versions = BotVersionRepository.forBotByCreatedAt(bot.id)
       val latestVersionOpt = versions.lastOption
-      Ok(views.html.bots.show( bot, latestVersionOpt, versions.reverse))
-    }.merge
+      val botShowView = BotShowView(bot, owner, latestVersionOpt, versions)
+      Ok(views.html.bots.show(botShowView))
+    }
+    resultEither.merge
   }
 
-  //def add = Action { request =>
-    //Ok(views.html.bots.add(request.flash.get("error")))
-  //}
+  def add = Action { request =>
+    Ok(views.html.bots.add(request.flash.get("error")))
+  }
 
-  // TODO: add form page for this
   def create = Action { request =>
     val newBotOpt: Option[Bot] = for {
       form <- request.body.asFormUrlEncoded
@@ -47,8 +54,11 @@ object Bots extends Controller {
       botNames <- form.get("botName")
       botName <- botNames.headOption
     } yield {
-      val user = User(name=ownerName)
-      Bot(name=botName, ownerId=user.id)
+      val newUser = User(name=ownerName)
+      val user = UserRepository.putIfAbsent(newUser).getOrElse(newUser)
+      val bot = Bot(name=botName, ownerId=user.id)
+      BotRepository.put(bot)
+      bot
     }
 
     newBotOpt match {
@@ -57,7 +67,20 @@ object Bots extends Controller {
     }
   }
 
+  private def botIndexView = {
+    val botViews = for {
+      bot <- listBots.toIndexedSeq.sortBy(_.modifiedAt)
+      owner <- UserRepository.get(bot.ownerId)
+    } yield BotIndexView.BotView(bot, owner)
+    BotIndexView(botViews)
+  }
+
   private def listBots: Iterable[Bot] = BotRepository.all
+
+  private def loadOwner(bot: Bot) = {
+    UserRepository.get(bot.ownerId)
+      .toRight(NotFound("Bot owner not found"))
+  }
 
   private def loadBot(botId: String): Either[Result, Bot] = {
     Try(BotRepository.get(UUID.fromString(botId))) match {

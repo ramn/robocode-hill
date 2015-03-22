@@ -15,13 +15,24 @@ package v1 {
       }
     }
 
+    def findByName(name: String): Option[User] = {
+      all.filter(_.name == name).headOption
+    }
+
     def all: Set[User] = Db.inTx { db =>
       table(db).values.toSet
     }
 
-    def put(bot: User) = {
+    def put(user: User): Unit = {
       Db.inTx { db =>
-        table(db).put(bot.id, bot)
+        table(db).put(user.id, user)
+      }
+      ()
+    }
+
+    def putIfAbsent(user: User): Option[User] = {
+      Db.inTx { db =>
+        table(db).putIfAbsent(user.id, user)
       }
     }
 
