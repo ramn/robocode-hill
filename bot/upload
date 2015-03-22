@@ -1,0 +1,10 @@
+#!/bin/bash
+
+. .env # contains env variables
+
+test -z "$MY_BOT_UUID" && echo "Error: You need to set MY_BOT_UUID variable" && exit 1
+
+BOT_URL="http://robocode.ramn.se/bots/$MY_BOT_UUID"
+BOT_FILE="target/scala-2.11/ramn-bot_2.11-0.1-SNAPSHOT.jar"
+
+sbt package && curl -F "bot=@$BOT_FILE;type=application/java-archive" "$BOT_URL"
