@@ -21,11 +21,6 @@ import se.ramn.models.UploadBotRequest
 
 object BotVersions extends Controller {
 
-  // TODO: impl this
-  //def index = Action {
-  //  Ok(views.html.bots.index(listBots))
-  //}
-
   def show(id: String) = Action {
     val successfulResponse = for {
       uuid <- Try(UUID.fromString(id)).toOption
