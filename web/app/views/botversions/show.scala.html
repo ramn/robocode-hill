@@ -4,7 +4,12 @@
 @(bot: Bot, botVersion: BotVersion)
 @main("Show bot version") {
   <h1>Show bot version</h1>
-  <p><a href="/bots">Show all bots</a></p>
+  <p><a href="@routes.Bots.index">Show all bots</a></p>
+  <p>
+    <a href="@routes.Bots.show(botVersion.botId.toString)">
+      Show bot
+    </a>
+  </p>
 
   <p>
     <dl>
