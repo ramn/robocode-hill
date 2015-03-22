@@ -9,7 +9,7 @@ import se.ramn.models.Db
 import se.ramn.models.DbTable
 
 
-object v1_migrateBotV1toV2 {
+object v1_migrateBotV1toV2 extends (DB => Unit) {
   def apply(db: DB) = {
     println("turned off")
 //    import se.ramn.models.{v1, v2}
