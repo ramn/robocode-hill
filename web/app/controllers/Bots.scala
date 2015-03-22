@@ -5,6 +5,8 @@ import java.io.FileFilter
 import java.util.UUID
 import collection.immutable.Seq
 import scala.util.Try
+import scala.util.Success
+import scala.util.Failure
 
 //import play.api._
 import play.api.mvc._
@@ -15,6 +17,7 @@ import se.ramn.models.v1.User
 import se.ramn.models.v1.UserRepository
 import se.ramn.models.v2.Bot
 import se.ramn.models.v2.BotRepository
+import se.ramn.models.v2.BotVersionRepository
 
 
 object Bots extends Controller {
@@ -24,12 +27,11 @@ object Bots extends Controller {
   }
 
   def show(id: String) = Action {
-    val botOpt = Try(BotRepository.get(UUID.fromString(id))).toOption.flatten
-    val latestVersionOpt = botOpt.flatMap(_.latestVersion)
-    botOpt match {
-      case Some(bot) => Ok(views.html.bots.show(bot, latestVersionOpt))
-      case None => NotFound("404 Not Found")
-    }
+    loadBot(id).right.map { bot =>
+      val versions = BotVersionRepository.forBotByCreatedAt(bot.id)
+      val latestVersionOpt = versions.lastOption
+      Ok(views.html.bots.show( bot, latestVersionOpt, versions.reverse))
+    }.merge
   }
 
   //def add = Action { request =>
@@ -57,7 +59,11 @@ object Bots extends Controller {
 
   private def listBots: Iterable[Bot] = BotRepository.all
 
-  private def loadBot(botId: String) = {
-    Try(BotRepository.get(UUID.fromString(botId))).toOption.flatten
+  private def loadBot(botId: String): Either[Result, Bot] = {
+    Try(BotRepository.get(UUID.fromString(botId))) match {
+      case Success(Some(bot)) => Right(bot)
+      case Failure(e) => Left(NotFound(e.getMessage))
+      case Success(None) => Left(NotFound("Bot not found"))
+    }
   }
 }

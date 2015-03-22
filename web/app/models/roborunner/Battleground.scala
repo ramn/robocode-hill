@@ -23,7 +23,9 @@ import se.ramn.models.BattleSpecification
 
 object RandomBattleground extends Battleground {
   def run(): BattleReport = {
-    val botVersions = generateBotSelection.flatMap(_.latestVersion)
+    val botVersions = generateBotSelection.flatMap { bot =>
+      BotVersionRepository.lastVersionForBot(bot.id)
+    }
     val specification = BattleRequest(botVersions=botVersions)
     run(specification)
   }

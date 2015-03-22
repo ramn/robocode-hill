@@ -1,6 +1,9 @@
+@import scala.collection.immutable.Seq
 @import se.ramn.models.v2.Bot
 @import se.ramn.models.v2.BotVersion
-@(bot: Bot, latestVersionOpt: Option[BotVersion])
+
+@(bot: Bot, latestVersionOpt: Option[BotVersion], versions: Seq[BotVersion])
+
 @main("Show bot") {
   <h1>Show bot</h1>
   <p><a href="/bots">Show all bots</a></p>
@@ -50,6 +53,20 @@
 
       <dt>Modified at</dt>
       <dd>@botVersion.modifiedAt</dd>
+    </dl>
+    }
+
+    <h2>All bot versions</h2>
+    @for(botVersion <- versions) {
+    <dl>
+      <dt>Version id</dt>
+      <dd>
+        <a href="@routes.BotVersions.show(botVersion.id.toString)">
+          @botVersion.id
+        </a>
+      </dd>
+      <dt>Created at</dt>
+      <dd>@botVersion.createdAt</dd>
     </dl>
     }
   </p>

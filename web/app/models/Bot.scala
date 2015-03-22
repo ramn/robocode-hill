@@ -37,15 +37,7 @@ package v2 {
     ownerId: UUID,
     createdAt: DateTime = DateTime.now(DateTimeZone.UTC),
     modifiedAt: DateTime = DateTime.now(DateTimeZone.UTC)
-  ) {
-    def latestVersion: Option[BotVersion] = {
-      BotVersionRepository.all
-        .filter(_.botId == id)
-        .toSeq
-        .sortBy(_.createdAt)
-        .lastOption
-    }
-  }
+  )
 
 
   case class BotVersion(

@@ -53,26 +53,4 @@ package v2 {
     private def table(db: DB) =
       db.getTreeMap[UUID, Bot](DbTable.bots.toString).asScala
   }
-
-
-  object BotVersionRepository {
-    def get(id: UUID): Option[BotVersion] = {
-      Db.inTx { db =>
-        table(db).get(id)
-      }
-    }
-
-    def all: Set[BotVersion] = Db.inTx { db =>
-      table(db).values.toSet
-    }
-
-    def put(bot: BotVersion) = {
-      Db.inTx { db =>
-        table(db).put(bot.id, bot)
-      }
-    }
-
-    private def table(db: DB) =
-      db.getTreeMap[UUID, BotVersion](DbTable.botVersions.toString).asScala
-  }
 }
