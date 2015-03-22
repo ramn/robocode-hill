@@ -15,7 +15,7 @@ POST   /bots                        controllers.Bots.create
 
 GET    /botversions/:id             controllers.BotVersions.show(id)
 GET    /botversions/download/:id    controllers.BotVersions.download(id)
-POST   /bots/:id/                   controllers.BotVersions.create(id)
+POST   /bots/:id                    controllers.BotVersions.create(id)
 
 
 # Map static resources from the /public folder to the /assets URL path
