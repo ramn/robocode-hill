@@ -34,7 +34,9 @@ object Bots extends Controller {
       bot <- loadBot(id).right
       owner <- loadOwner(bot).right
     } yield {
-      val versions = BotVersionRepository.forBotByCreatedAt(bot.id)
+      val versions = BotVersionRepository
+        .forBotByCreatedAt(bot.id)
+        .sortBy(_.createdAt)(dateTimeOrdering.reverse)
       val latestVersionOpt = versions.lastOption
       val botShowView = BotShowView(bot, owner, latestVersionOpt, versions)
       Ok(views.html.bots.show(botShowView))
