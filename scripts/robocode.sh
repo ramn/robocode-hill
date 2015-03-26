@@ -14,7 +14,7 @@
 #  -DRANDOMSEED=<long number> Set seed for deterministic behavior of random
 #                             numbers
 
-SCALA_LIB="/users/ramn/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.6.jar"
+SCALA_LIB="$HOME/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.6.jar"
 
 
 pushd $(dirname $0)/../target/robocode/
