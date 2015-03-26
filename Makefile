@@ -1,7 +1,9 @@
 .PHONY: run-robocode
 
-robocode_url := "http://garr.dl.sourceforge.net/project/robocode/naval-robocode/0.9.1/naval-robocode-0.9.1-setup.jar"
+robocode_url := 'http://softlayer-ams.dl.sourceforge.net/project/robocode/robocode/1.9.2.4/robocode-1.9.2.4-setup.jar'
 robocode_repo := "git@github.com:robo-code/robocode.git"
+
+all: target/robocode
 
 target:
 	mkdir target
