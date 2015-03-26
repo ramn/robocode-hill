@@ -14,8 +14,8 @@ target/robocode: target/robocode.jar
 target/robocode.jar: target
 	curl -JLo target/robocode.jar $(robocode_url)
 
-run-robocode: target/robocode
-	bash target/robocode/robocode.sh $(ARGS)
+#run-robocode: target/robocode
+#	bash target/robocode/robocode.sh $(ARGS)
 
 #target/robocode: target
 #	git clone $(robocode_repo)
