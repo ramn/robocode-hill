@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #  -DWORKINGDIRECTORY=<path>  Set the working directory
 #  -DROBOTPATH=<path>         Set the robots directory (default is 'robots')
@@ -16,7 +16,10 @@
 
 SCALA_LIB="/users/ramn/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.6.jar"
 
-pwd=`pwd`
-cd "${0%/*}"
-java -Xmx512M -DlogMessages=true -DlogErrors=true -Ddebug=true -cp libs/robocode.jar:"$SCALA_LIB" robocode.Robocode $*
-cd "${pwd}"
+
+pushd $(dirname $0)/../target/robocode/
+
+java -Xmx512M -DlogMessages=true -DlogErrors=true -Ddebug=true \
+  -cp libs/robocode.jar:"$SCALA_LIB" robocode.Robocode $*
+
+popd
