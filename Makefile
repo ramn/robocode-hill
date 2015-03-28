@@ -1,4 +1,4 @@
-.PHONY: run-robocode
+.PHONY: run-robocode all clean
 
 robocode_url := 'http://softlayer-ams.dl.sourceforge.net/project/robocode/robocode/1.9.2.4/robocode-1.9.2.4-setup.jar'
 robocode_repo := "git@github.com:robo-code/robocode.git"
@@ -23,3 +23,6 @@ target/robocode.jar: target
 
 run-docker:
 	docker run --rm -ti -p 0.0.0.0:9000:9000 -v $(pwd)/web/data/bots:/data/bots:rw robocode-hill-web:1.0-SNAPSHOT
+
+clean:
+	rm -rf target/
